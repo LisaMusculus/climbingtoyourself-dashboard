@@ -1,0 +1,295 @@
+---
+title: "Climbing To Yourself"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: row
+    logo: logo.png
+    vertical_layout: fill
+    navbar: 
+      - { icon: "fab fa-youtube", href: "https://youtu.be/6RIa5s-Jfuc", align: right }
+      - { icon: "fas fa-info", href: "https://www.dshs-koeln.de/psychologisches-institut/initiativen-transferprojekte/climbing-to-yourself/", align: right }
+
+      
+---
+
+<style>                     
+.navbar {
+  background-color:black;
+  border-color:white;
+  font-size:1.3em;}
+.navbar-logo img {
+    position: absolute;
+    right: 90px;
+</style> 
+
+
+```{r setup, include=FALSE}
+
+library(flexdashboard)
+library(haven)
+library(dplyr)
+library(readxl)
+library(tidyverse)
+library(plotly)
+library(ggmap)
+library(knitr)
+library(vembedr)
+library(magick)
+library(sjmisc)
+
+studylong <- read_sav("~/Documents/Spoho/R Dashboard/Data/Study1_data_all_but_kinematics_N104_1872lines_long.sav")
+study1 <- read_sav("~/Documents/Spoho/R Dashboard/Data/Study1_all_data_except_kinematics_N104_short_1row.sav")
+study1kinmot <- read_sav("~/Documents/Spoho/R Dashboard/Data/Study1_data_all_incl_kinematics_N104_624lines_long_motor_only.sav")
+#study1b <- read.csv()
+#study1c <- read.csv()
+#study2 <- read.csv()
+
+#add gender to study1
+study1longgender <- studylong[, c("VP_Code", "Gender")]
+study1longgender$n <- ave(study1longgender$VP_Code,study1longgender$VP_Code, FUN=seq_along)
+study1shortgender <- study1longgender[which(with(study1longgender, study1longgender$n == 1)), ] 
+study1 <- merge(study1, study1shortgender, by = "VP_Code", all.x = TRUE)
+study1 <- move_columns(study1, contains("Gender"), .after = "Age_group")
+
+
+#alldata=rbind(study1,study1kinmot,study1a,study1b,study2)
+
+```
+About 
+===
+row {data-width=650}
+-----------------------------------------------------------------------
+### the project
+
+
+```{r}
+
+```
+
+
+row {data-width=350}
+-----------------------------------------------------------------------
+
+
+```{r  out.width = "100%", out.height = "100%"}
+#include_graphics("")
+
+```
+
+### the team
+
+```{r}
+
+```
+Studie 1
+===
+row {data-height=1500}
+-----------------------------------------------------------------------
+
+### participants  
+
+```{r}
+
+participants1=study1 %>% nrow()
+#for studylong%>% filter(`difficulty`=="1",`task_r`=="move",`selfmanipulation_r`=="without") %>% nrow()
+valueBox(value = participants1 ,icon = "fas fa-users",caption = "darunter...",color = "grey")
+
+valueBox(value =" Teilnehmer*innen",icon = "fas fa-users",caption = "darunter...",color = "grey")
+```
+
+### 
+
+```{r  out.width = "100%", out.height = "100%"}
+library(plotly)
+
+
+```
+
+row data-width=650}
+-----------------------------------------------------------------------
+
+### children 6 to 8 
+
+```{r}
+
+childrensixeight1=study1 %>% filter(`Age_group`==1) %>% nrow()
+#,`difficulty`=="1",`task_r`=="move",`selfmanipulation_r`=="without"
+valueBox(value = childrensixeight1,icon = "fas fa-child fa-xs",caption = "Teilnehmer*innen 6-8 Jahre",color = "grey")
+
+```
+
+### children 10 to 12 
+
+```{r}
+
+childrententwelve1=study1 %>% filter(`Age_group`==2) %>% nrow()
+#`difficulty`=="1",`task_r`=="move",`selfmanipulation_r`=="without",
+valueBox(value = childrententwelve1,icon = "fas fa-child fa-3x",caption = "Teilnehmer*innen 10-12 Jahre",color = "grey")
+
+
+```
+
+### adolescents 14 to 16
+
+```{r}
+
+childrenfourteensixteen1=study1 %>% filter(`Age_group`==3 ) %>% nrow()
+#`difficulty`=="1",`task_r`=="move",`selfmanipulation_r`=="without",
+valueBox(value = childrenfourteensixteen1,icon = "fas fa-child fa-5x",caption = "Teilnehmer*innen 14-16 Jahre",color = "grey")
+
+```
+
+### adults from 18 
+
+```{r}
+
+adults1=study1 %>% filter(`Age_group`==4 ) %>% nrow()
+#`difficulty`=="1",`task_r`=="move",`selfmanipulation_r`=="without",
+valueBox(value = adults1,icon = "fas fa-child fa-7x",caption = "Teilnehmer*innen Erwachsen",color = "grey")
+
+```
+
+row {data-width=350}
+-----------------------------------------------------------------------
+
+### female
+
+```{r}
+
+female1=study1 %>% filter(`Gender`==1) %>% nrow()
+#,`difficulty`=="1",`task_r`=="move",`selfmanipulation_r`=="without"
+valueBox(value = female1,icon = "fas fa-female ",caption = "Teilnehmerinnen weiblich",color = "grey")
+
+```
+
+### male
+
+```{r}
+
+male1=study1 %>% filter(`Gender`==2) %>% nrow()
+#,`difficulty`=="1",`task_r`=="move",`selfmanipulation_r`=="without"
+valueBox(value = male1,icon = "fas fa-male",caption = "Teilnehmer männlich",color = "grey")
+
+```
+
+row {data-width=350}
+-----------------------------------------------------------------------
+
+```{r }
+
+```
+
+### Chart C
+
+```{r}
+
+#embed_vimeo( 520710488) %>%
+ # use_start_time("0m01") %>%
+  #use_align("center")
+
+```
+
+```{r}
+#icon: "fas fa-brain"
+#icon: "fas fa-running"
+
+```
+
+Studie 1b
+===
+Row {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+Row {data-width=350}
+-----------------------------------------------------------------------
+
+
+```{r  out.width = "100%", out.height = "100%"}
+#include_graphics("Logo.png")
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
+Studie 1c
+===
+Row {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+Row {data-width=350}
+-----------------------------------------------------------------------
+
+
+```{r  out.width = "100%", out.height = "100%"}
+#include_graphics("Logo.png")
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
+Studie 2
+===
+Row {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+Row {data-width=350}
+-----------------------------------------------------------------------
+
+
+```{r  out.width = "100%", out.height = "100%"}
+#include_graphics("Logo.png")
+
+```
+
+### Chart C
+
+```{r}
+
+```
+Mehr  
+===
+Row {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+
+Row {data-width=350}
+-----------------------------------------------------------------------
+
+
+
+```{r  out.width = "100%", out.height = "100%"}
+#include_graphics("Logo.png")
+
+```
